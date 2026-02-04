@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Sinh viên - ST23C</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .form-group { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Quản lý Sinh viên</h2>
+
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+        <h3>Thêm / Cập nhật Sinh viên</h3>
+        <input type="hidden" id="studentId">
+        <div class="form-group">Tên: <input type="text" id="name"></div>
+        <div class="form-group">Tuổi: <input type="number" id="age"></div>
+        <div class="form-group">Email: <input type="email" id="email"></div>
+        <button onclick="saveStudent()">Lưu (Thêm/Sửa)</button>
+        <button onclick="clearForm()">Làm mới</button>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <input type="text" id="keyword" placeholder="Nhập tên tìm kiếm...">
+        <button onclick="searchStudent()">Tìm kiếm</button>
+    </div>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Tuổi</th>
+                <th>Email</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const API_URL = "/api/students";
+
+        // Yêu cầu 7: Get All & Hiển thị
+        async function loadStudents() {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            renderTable(data);
+        }
+
+        function renderTable(data) {
+            const tbody = document.querySelector("#studentTable tbody");
+            tbody.innerHTML = data.map(s => `
+                <tr>
+                    <td>${s.id}</td>
+                    <td>${s.name}</td>
+                    <td>${s.age}</td>
+                    <td>${s.email}</td>
+                    <td>
+                        <button onclick="editStudent(${s.id})">Sửa</button>
+                        <button onclick="deleteStudent(${s.id})">Xóa</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Yêu cầu 10: Tìm kiếm
+        async function searchStudent() {
+            const kw = document.getElementById("keyword").value;
+            const res = await fetch(`${API_URL}/search?keyword=${kw}`);
+            const data = await res.json();
+            renderTable(data);
+        }
+
+        // Yêu cầu 1 & 6 & 10: Thêm mới / Cập nhật
+        async function saveStudent() {
+            const id = document.getElementById("studentId").value;
+            const student = {
+                name: document.getElementById("name").value,
+                age: document.getElementById("age").value,
+                email: document.getElementById("email").value
+            };
+
+            if (id) {
+                // Yêu cầu 6 & 9: Update
+                await fetch(`${API_URL}/update/${id}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(student)
+                });
+            } else {
+                // Yêu cầu 1 & 10: Add new
+                const nextId = prompt("Nhập ID cho sinh viên mới:"); // Vì SQL của bạn ko để identity
+                student.id = nextId;
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(student)
+                });
+            }
+            clearForm();
+            loadStudents();
+        }
+
+        // Yêu cầu 2 & 8: Xóa sinh viên
+        async function deleteStudent(id) {
+            if(confirm("Bạn có chắc muốn xóa?")) {
+                await fetch(`${API_URL}/delete/${id}`, { method: 'POST' });
+                loadStudents();
+            }
+        }
+
+        // Yêu cầu 4 & 9: Lấy theo ID để sửa
+        async function editStudent(id) {
+            const res = await fetch(`${API_URL}/${id}`);
+            const s = await res.json();
+            document.getElementById("studentId").value = s.id;
+            document.getElementById("name").value = s.name;
+            document.getElementById("age").value = s.age;
+            document.getElementById("email").value = s.email;
+        }
+
+        function clearForm() {
+            document.getElementById("studentId").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("age").value = "";
+            document.getElementById("email").value = "";
+        }
+
+        loadStudents();
+    </script>
+</body>
+</html>
