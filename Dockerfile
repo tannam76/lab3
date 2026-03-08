@@ -1,23 +1,13 @@
-# Stage 1: Build với Maven
-FROM maven:3.8.6-eclipse-temurin-17 AS build
+# Stage 1: Build
+FROM maven:3.9-eclipse-temurin-21 AS build
+# hoặc cụ thể: maven:3.9.9-eclipse-temurin-21 (nếu muốn Maven mới hơn)
 
-# Copy source code
 COPY . /app
-
-# Đặt working directory
 WORKDIR /app
-
-# Build project, skip test để nhanh hơn (bạn có thể bỏ -DskipTests nếu cần chạy test)
 RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime image nhẹ
-FROM eclipse-temurin:17-jdk-alpine
-
-# Copy file JAR từ stage build
+# Stage 2: Runtime (cũng dùng JDK 21 để chạy)
+FROM eclipse-temurin:21-jdk-alpine
 COPY --from=build /app/target/*.jar /app.jar
-
-# Expose port (nếu app Spring Boot hoặc tương tự dùng 8080)
 EXPOSE 8080
-
-# Chạy ứng dụng
 ENTRYPOINT ["java", "-jar", "/app.jar"]
