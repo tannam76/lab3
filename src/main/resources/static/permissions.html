@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Quyền hạn | QL Đào Tạor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./adminlte/css/adminlte.css" />
+</head>
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<div class="app-wrapper">
+
+  <nav class="app-header navbar navbar-expand bg-body">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="bi bi-list"></i></a></li>
+        <li class="nav-item d-none d-md-block"><span class="nav-link fw-semibold">QL Đào Tạor</span></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen">
+          <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display:none"></i>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <div class="sidebar-brand">
+      <a href="./dashboard.html" class="brand-link">
+        <img src="./adminlte/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow" />
+        <span class="brand-text fw-light">QL Đào Tạo</span>
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <nav class="mt-2">
+        <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+          <li class="nav-item"><a href="./dashboard.html" class="nav-link"><i class="nav-icon bi bi-speedometer2"></i><p>Dashboard</p></a></li>
+          <li class="nav-item"><a href="./students.html" class="nav-link"><i class="nav-icon bi bi-people-fill"></i><p>Sinh viên</p></a></li>
+          <li class="nav-item"><a href="./users.html" class="nav-link"><i class="nav-icon bi bi-person-badge"></i><p>Người dùng</p></a></li>
+          <li class="nav-item"><a href="./roles.html" class="nav-link"><i class="nav-icon bi bi-shield-lock"></i><p>Vai trò</p></a></li>
+          <li class="nav-item"><a href="./permissions.html" class="nav-link active"><i class="nav-icon bi bi-key"></i><p>Quyền hạn</p></a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6"><h3 class="mb-0">Quyền hạn</h3></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+              <li class="breadcrumb-item"><a href="./dashboard.html">Home</a></li>
+              <li class="breadcrumb-item active">Quyền hạn</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="container-fluid">
+        <div class="card shadow-sm border-0">
+          <div class="card-header d-flex align-items-center gap-2">
+            <h3 class="card-title mb-0"><i class="bi bi-key me-2 text-danger"></i>Danh sách quyền hạn</h3>
+            <div class="ms-auto">
+              <div class="input-group input-group-sm" style="width:240px">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo code / mô tả..." />
+              </div>
+            </div>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width:5%">#</th>
+                  <th style="width:30%">Mã quyền (Code)</th>
+                  <th>Mô tả</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+          <div class="card-footer text-muted small" id="info"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="float-end d-none d-sm-inline">QL Đào Tạo</div>
+    <strong>Quản lý trường học | AdminLTE 4</strong>
+  </footer>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="toast" class="toast align-items-center text-bg-success border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg">Thành công!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="./adminlte/js/adminlte.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tableBody = document.getElementById('tableBody');
+  const info = document.getElementById('info');
+  const searchInput = document.getElementById('searchInput');
+  let allPerms = [];
+
+  function renderTable(list) {
+    const term = searchInput.value.trim().toLowerCase();
+    const filtered = term ? list.filter(p =>
+      (p.code||'').toLowerCase().includes(term) ||
+      (p.description||'').toLowerCase().includes(term)
+    ) : list;
+
+    if (!filtered.length) {
+      tableBody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-4">Không có dữ liệu</td></tr>';
+      info.textContent = '';
+      return;
+    }
+    tableBody.innerHTML = filtered.map((p, i) => `
+      <tr>
+        <td class="text-muted">${i + 1}</td>
+        <td><span class="badge bg-danger-subtle text-danger-emphasis fs-6 fw-normal font-monospace">${p.code || ''}</span></td>
+        <td>${p.description || '<span class="text-muted">—</span>'}</td>
+      </tr>`).join('');
+    info.textContent = `Hiển thị ${filtered.length} / ${allPerms.length} quyền hạn`;
+  }
+
+  async function loadPermissions() {
+    try {
+      const res = await fetch('/api/permissions');
+      allPerms = await res.json();
+      renderTable(allPerms);
+    } catch { tableBody.innerHTML = '<tr><td colspan="3" class="text-center text-danger">Lỗi tải dữ liệu</td></tr>'; }
+  }
+
+  searchInput.addEventListener('input', () => renderTable(allPerms));
+
+  const sw = document.querySelector('.sidebar-wrapper');
+  if (sw && window.OverlayScrollbarsGlobal?.OverlayScrollbars)
+    window.OverlayScrollbarsGlobal.OverlayScrollbars(sw, { scrollbars: { theme:'os-theme-light', autoHide:'leave', clickScroll:true }});
+
+  loadPermissions();
+});
+</script>
+</body>
+</html>

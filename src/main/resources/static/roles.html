@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Vai trò | QL Đào Tạo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./adminlte/css/adminlte.css" />
+</head>
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<div class="app-wrapper">
+
+  <!-- Navbar -->
+  <nav class="app-header navbar navbar-expand bg-body">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="bi bi-list"></i></a></li>
+        <li class="nav-item d-none d-md-block"><span class="nav-link fw-semibold">QL Đào Tạo</span></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen">
+          <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display:none"></i>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <div class="sidebar-brand">
+      <a href="./dashboard.html" class="brand-link">
+        <img src="./adminlte/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow" />
+        <span class="brand-text fw-light">QL Đào Tạo</span>
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <nav class="mt-2">
+        <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+          <li class="nav-item"><a href="./dashboard.html" class="nav-link"><i class="nav-icon bi bi-speedometer2"></i><p>Dashboard</p></a></li>
+          <li class="nav-item"><a href="./students.html" class="nav-link"><i class="nav-icon bi bi-people-fill"></i><p>Sinh viên</p></a></li>
+          <li class="nav-item"><a href="./users.html" class="nav-link"><i class="nav-icon bi bi-person-badge"></i><p>Người dùng</p></a></li>
+          <li class="nav-item"><a href="./roles.html" class="nav-link active"><i class="nav-icon bi bi-shield-lock"></i><p>Vai trò</p></a></li>
+          <li class="nav-item"><a href="./permissions.html" class="nav-link"><i class="nav-icon bi bi-key"></i><p>Quyền hạn</p></a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="app-main">
+    <div class="app-content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6"><h3 class="mb-0">Vai trò</h3></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+              <li class="breadcrumb-item"><a href="./dashboard.html">Home</a></li>
+              <li class="breadcrumb-item active">Vai trò</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="container-fluid">
+        <div class="card shadow-sm border-0">
+          <div class="card-header d-flex flex-wrap gap-2 align-items-center">
+            <h3 class="card-title mb-0"><i class="bi bi-shield-lock me-2 text-warning"></i>Danh sách vai trò</h3>
+            <div class="ms-auto d-flex flex-wrap gap-2">
+              <div class="input-group input-group-sm" style="width:220px">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo code / tên..." />
+              </div>
+              <button class="btn btn-warning btn-sm text-white" id="btnAdd">
+                <i class="bi bi-shield-plus me-1"></i>Thêm vai trò
+              </button>
+            </div>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width:25%">Code</th>
+                  <th style="width:30%">Tên vai trò</th>
+                  <th style="width:30%">Quyền hạn</th>
+                  <th style="width:15%" class="text-end">Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr><td colspan="4" class="text-center py-4"><div class="spinner-border spinner-border-sm text-secondary"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="small text-secondary" id="paginationInfo"></div>
+            <nav><ul class="pagination pagination-sm mb-0" id="pagination"></ul></nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="float-end d-none d-sm-inline">QL Đào Tạo</div>
+    <strong>Quản lý trường học | AdminLTE 4</strong>
+  </footer>
+</div>
+
+<!-- Role Modal -->
+<div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roleModalTitle">Thêm vai trò</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="roleId" />
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Mã (Code) <span class="text-danger">*</span></label>
+            <input type="text" id="rCode" class="form-control text-uppercase" placeholder="Ví dụ: ADMIN" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Tên vai trò <span class="text-danger">*</span></label>
+            <input type="text" id="rName" class="form-control" placeholder="Ví dụ: Quản trị hệ thống" />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Phân quyền</label>
+          <div class="border rounded p-2" id="permCheckboxes" style="max-height:220px;overflow-y:auto;columns:2">
+            <div class="text-muted small">Đang tải...</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-warning text-white" id="btnSave">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Xác nhận xóa</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">Bạn có chắc chắn muốn xóa vai trò này không?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger btn-sm" id="btnConfirmDelete">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="toast" class="toast align-items-center border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="./adminlte/js/adminlte.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const API = '/api/roles';
+  const PAGE_SIZE = 10;
+  let currentPage = 0, totalPages = 0, totalElements = 0;
+  let allPerms = [];
+  let pendingDeleteId = null;
+
+  const tableBody = document.getElementById('tableBody');
+  const pagination = document.getElementById('pagination');
+  const paginationInfo = document.getElementById('paginationInfo');
+  const searchInput = document.getElementById('searchInput');
+  const toastEl = document.getElementById('toast');
+  const toastMsgEl = document.getElementById('toastMsg');
+
+  const roleModal = new bootstrap.Modal(document.getElementById('roleModal'));
+  const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+  function showToast(msg, type = 'success') {
+    toastEl.className = `toast align-items-center border-0 text-bg-${type}`;
+    toastMsgEl.textContent = msg;
+    bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 }).show();
+  }
+
+  async function loadPermissions() {
+    try {
+      const res = await fetch('/api/permissions');
+      allPerms = await res.json();
+    } catch { allPerms = []; }
+  }
+
+  function renderPermCheckboxes(selectedIds = []) {
+    const container = document.getElementById('permCheckboxes');
+    if (!allPerms.length) { container.innerHTML = '<div class="text-muted small">Không có quyền hạn</div>'; return; }
+    container.innerHTML = allPerms.map(p => `
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="${p.id}" id="perm_${p.id}"
+          ${selectedIds.includes(p.id) ? 'checked' : ''}>
+        <label class="form-check-label small" for="perm_${p.id}">
+          <span class="font-monospace text-danger">${p.code}</span>
+        </label>
+      </div>`).join('');
+  }
+
+  function getSelectedPermIds() {
+    return [...document.querySelectorAll('#permCheckboxes input:checked')].map(el => el.value);
+  }
+
+  function highlightText(text, term) {
+    if (!term) return text;
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(escaped, 'ig'), m => `<mark>${m}</mark>`);
+  }
+
+  function renderTable(roles) {
+    const term = searchInput.value.trim();
+    if (!roles.length) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">Không có dữ liệu</td></tr>';
+    } else {
+      tableBody.innerHTML = roles.map(r => {
+        const permBadges = (r.permissions || []).map(p =>
+          `<span class="badge bg-danger-subtle text-danger-emphasis me-1 font-monospace" style="font-size:.7em">${p.code}</span>`
+        ).join('') || '<span class="text-muted small">—</span>';
+        return `<tr>
+          <td><span class="badge bg-warning-subtle text-warning-emphasis fs-6 fw-semibold">${highlightText(r.code || '', term)}</span></td>
+          <td>${highlightText(r.name || '', term)}</td>
+          <td style="white-space:normal">${permBadges}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-secondary me-1" data-id="${r.id}" data-action="edit" title="Sửa"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger" data-id="${r.id}" data-action="delete" title="Xóa"><i class="bi bi-trash"></i></button>
+          </td></tr>`;
+      }).join('');
+    }
+    const from = totalElements === 0 ? 0 : currentPage * PAGE_SIZE + 1;
+    const to = Math.min((currentPage + 1) * PAGE_SIZE, totalElements);
+    paginationInfo.textContent = `Hiển thị ${from}–${to} trên tổng ${totalElements} vai trò`;
+    renderPagination();
+  }
+
+  function renderPagination() {
+    if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+    let html = `<li class="page-item ${currentPage===0?'disabled':''}"><a class="page-link" href="#" data-page="${currentPage-1}">&laquo;</a></li>`;
+    for (let i = 0; i < totalPages; i++) {
+      html += `<li class="page-item ${i===currentPage?'active':''}"><a class="page-link" href="#" data-page="${i}">${i+1}</a></li>`;
+    }
+    html += `<li class="page-item ${currentPage===totalPages-1?'disabled':''}"><a class="page-link" href="#" data-page="${currentPage+1}">&raquo;</a></li>`;
+    pagination.innerHTML = html;
+  }
+
+  pagination.addEventListener('click', function(e) {
+    if (e.target.tagName !== 'A') return;
+    e.preventDefault();
+    const page = Number(e.target.getAttribute('data-page'));
+    if (isNaN(page) || page === currentPage || page < 0 || page >= totalPages) return;
+    currentPage = page; loadRoles();
+  });
+
+  searchInput.addEventListener('input', function() { currentPage = 0; loadRoles(); });
+
+  async function loadRoles() {
+    tableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border spinner-border-sm text-secondary"></div></td></tr>';
+    try {
+      const res = await fetch(`${API}/search?keyword=${encodeURIComponent(searchInput.value||'')}&page=${currentPage}&size=${PAGE_SIZE}`);
+      const data = await res.json();
+      const roles = Array.isArray(data.content) ? data.content : [];
+      totalPages = data.totalPages || 0;
+      totalElements = data.totalElements || 0;
+      renderTable(roles);
+    } catch { tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Lỗi tải dữ liệu</td></tr>'; }
+  }
+
+  document.getElementById('btnAdd').addEventListener('click', async function() {
+    await loadPermissions();
+    document.getElementById('roleId').value = '';
+    document.getElementById('rCode').value = '';
+    document.getElementById('rName').value = '';
+    document.getElementById('roleModalTitle').textContent = 'Thêm vai trò';
+    document.getElementById('btnSave').dataset.mode = 'create';
+    renderPermCheckboxes([]);
+    roleModal.show();
+  });
+
+  tableBody.addEventListener('click', async function(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const id = btn.getAttribute('data-id');
+    const action = btn.getAttribute('data-action');
+
+    if (action === 'edit') {
+      await loadPermissions();
+      try {
+        const res = await fetch(`${API}/${id}`);
+        const r = await res.json();
+        document.getElementById('roleId').value = r.id;
+        document.getElementById('rCode').value = r.code || '';
+        document.getElementById('rName').value = r.name || '';
+        document.getElementById('roleModalTitle').textContent = 'Cập nhật vai trò';
+        document.getElementById('btnSave').dataset.mode = 'update';
+        const selectedIds = (r.permissions || []).map(p => p.id);
+        renderPermCheckboxes(selectedIds);
+        roleModal.show();
+      } catch { showToast('Không tải được thông tin vai trò', 'danger'); }
+    } else if (action === 'delete') {
+      pendingDeleteId = id;
+      confirmModal.show();
+    }
+  });
+
+  document.getElementById('btnConfirmDelete').addEventListener('click', async function() {
+    if (!pendingDeleteId) return;
+    try {
+      await fetch(`${API}/${pendingDeleteId}`, { method: 'DELETE' });
+      confirmModal.hide();
+      showToast('Đã xóa vai trò');
+      loadRoles();
+    } catch { showToast('Lỗi xóa vai trò', 'danger'); }
+    pendingDeleteId = null;
+  });
+
+  document.getElementById('btnSave').addEventListener('click', async function() {
+    const mode = this.dataset.mode;
+    const id = document.getElementById('roleId').value;
+    const code = document.getElementById('rCode').value.trim().toUpperCase();
+    const name = document.getElementById('rName').value.trim();
+    const permIds = getSelectedPermIds();
+
+    if (!code || !name) { showToast('Vui lòng nhập đầy đủ Code và Tên vai trò', 'warning'); return; }
+
+    try {
+      const url = mode === 'update' ? `${API}/${id}` : API;
+      const method = mode === 'update' ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, name })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const saved = await res.json();
+
+      // Assign permissions
+      await fetch(`${API}/${saved.id}/permissions`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(permIds)
+      });
+      roleModal.hide();
+      showToast(mode === 'create' ? 'Thêm vai trò thành công' : 'Cập nhật thành công');
+      loadRoles();
+    } catch { showToast('Có lỗi xảy ra khi lưu', 'danger'); }
+  });
+
+  const sw = document.querySelector('.sidebar-wrapper');
+  if (sw && window.OverlayScrollbarsGlobal?.OverlayScrollbars)
+    window.OverlayScrollbarsGlobal.OverlayScrollbars(sw, { scrollbars: { theme:'os-theme-light', autoHide:'leave', clickScroll:true }});
+
+  loadRoles();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard | QL Đào Tạo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./adminlte/css/adminlte.css" />
+  <style>
+    .stat-card { transition: transform .15s, box-shadow .15s; cursor: default; }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+    .stat-icon { font-size: 2.5rem; opacity: .85; }
+  </style>
+</head>
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<div class="app-wrapper">
+
+  <!-- Navbar -->
+  <nav class="app-header navbar navbar-expand bg-body">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="bi bi-list"></i></a></li>
+        <li class="nav-item d-none d-md-block"><span class="nav-link fw-semibold">QL Đào Tạo</span></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen">
+          <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display:none"></i>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <div class="sidebar-brand">
+      <a href="./dashboard.html" class="brand-link">
+        <img src="./adminlte/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow" />
+        <span class="brand-text fw-light">QL Đào Tạo</span>
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <nav class="mt-2">
+        <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+          <li class="nav-item">
+            <a href="./dashboard.html" class="nav-link active">
+              <i class="nav-icon bi bi-speedometer2"></i><p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./students.html" class="nav-link">
+              <i class="nav-icon bi bi-people-fill"></i><p>Sinh viên</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./users.html" class="nav-link">
+              <i class="nav-icon bi bi-person-badge"></i><p>Người dùng</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./roles.html" class="nav-link">
+              <i class="nav-icon bi bi-shield-lock"></i><p>Vai trò</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="./permissions.html" class="nav-link">
+              <i class="nav-icon bi bi-key"></i><p>Quyền hạn</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="app-main">
+    <div class="app-content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="container-fluid">
+        <div class="row g-3 mb-4">
+          <!-- Students -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-3 p-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="bi bi-people-fill stat-icon"></i>
+                </div>
+                <div>
+                  <div class="text-muted small">Sinh viên</div>
+                  <div class="fs-2 fw-bold" id="countStudents">—</div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0">
+                <a href="./students.html" class="text-primary small text-decoration-none">Xem danh sách <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Users -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-3 p-3 bg-success bg-opacity-10 text-success">
+                  <i class="bi bi-person-badge stat-icon"></i>
+                </div>
+                <div>
+                  <div class="text-muted small">Người dùng</div>
+                  <div class="fs-2 fw-bold" id="countUsers">—</div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0">
+                <a href="./users.html" class="text-success small text-decoration-none">Xem danh sách <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Roles -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-3 p-3 bg-warning bg-opacity-10 text-warning">
+                  <i class="bi bi-shield-lock stat-icon"></i>
+                </div>
+                <div>
+                  <div class="text-muted small">Vai trò</div>
+                  <div class="fs-2 fw-bold" id="countRoles">—</div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0">
+                <a href="./roles.html" class="text-warning small text-decoration-none">Xem danh sách <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Permissions -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-3 p-3 bg-danger bg-opacity-10 text-danger">
+                  <i class="bi bi-key stat-icon"></i>
+                </div>
+                <div>
+                  <div class="text-muted small">Quyền hạn</div>
+                  <div class="fs-2 fw-bold" id="countPermissions">—</div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0">
+                <a href="./permissions.html" class="text-danger small text-decoration-none">Xem danh sách <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="row g-3">
+          <div class="col-12 col-lg-6">
+            <div class="card shadow-sm border-0">
+              <div class="card-header"><h5 class="card-title mb-0"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Truy cập nhanh</h5></div>
+              <div class="card-body">
+                <div class="row g-2">
+                  <div class="col-6"><a href="./students.html" class="btn btn-outline-primary w-100"><i class="bi bi-plus-circle me-1"></i>Thêm sinh viên</a></div>
+                  <div class="col-6"><a href="./users.html" class="btn btn-outline-success w-100"><i class="bi bi-person-plus me-1"></i>Thêm người dùng</a></div>
+                  <div class="col-6"><a href="./roles.html" class="btn btn-outline-warning w-100"><i class="bi bi-shield-plus me-1"></i>Thêm vai trò</a></div>
+                  <div class="col-6"><a href="./permissions.html" class="btn btn-outline-danger w-100"><i class="bi bi-key me-1"></i>Xem quyền hạn</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card shadow-sm border-0">
+              <div class="card-header"><h5 class="card-title mb-0"><i class="bi bi-info-circle-fill text-info me-2"></i>Thông tin hệ thống</h5></div>
+              <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                  <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Ứng dụng</span><span class="fw-semibold">QL Đào Tạo</span></li>
+                  <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Framework</span><span class="fw-semibold">Spring Boot + AdminLTE 4</span></li>
+                  <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Database</span><span class="fw-semibold">SQL Server</span></li>
+                  <li class="py-1 d-flex justify-content-between"><span class="text-muted">Phiên bản</span><span class="fw-semibold">1.0.0</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="float-end d-none d-sm-inline">QL Đào Tạor</div>
+    <strong>Quản lý trường học | AdminLTE 4</strong>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="./adminlte/js/adminlte.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  async function loadStats() {
+    try {
+      const res = await fetch('/api/dashboard/stats');
+      const data = await res.json();
+      document.getElementById('countStudents').textContent = data.students ?? '?';
+      document.getElementById('countUsers').textContent = data.users ?? '?';
+      document.getElementById('countRoles').textContent = data.roles ?? '?';
+      document.getElementById('countPermissions').textContent = data.permissions ?? '?';
+    } catch { 
+      ['countStudents', 'countUsers', 'countRoles', 'countPermissions'].forEach(id => {
+        document.getElementById(id).textContent = '?';
+      });
+    }
+  }
+  loadStats();
+
+  const sw = document.querySelector('.sidebar-wrapper');
+  if (sw && window.OverlayScrollbarsGlobal?.OverlayScrollbars) {
+    window.OverlayScrollbarsGlobal.OverlayScrollbars(sw, { scrollbars: { theme:'os-theme-light', autoHide:'leave', clickScroll:true }});
+  }
+});
+</script>
+</body>
+</html>

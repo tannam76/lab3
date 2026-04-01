@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Người dùng | QL Đào Tạo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./adminlte/css/adminlte.css" />
+  <style>
+    .badge-status { cursor: pointer; transition: opacity .15s; }
+    .badge-status:hover { opacity: .75; }
+  </style>
+</head>
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<div class="app-wrapper">
+
+  <!-- Navbar -->
+  <nav class="app-header navbar navbar-expand bg-body">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="bi bi-list"></i></a></li>
+        <li class="nav-item d-none d-md-block"><span class="nav-link fw-semibold">QL Đào Tạo</span></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen">
+          <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+          <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display:none"></i>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <div class="sidebar-brand">
+      <a href="./dashboard.html" class="brand-link">
+        <img src="./adminlte/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow" />
+        <span class="brand-text fw-light">QL Đào Tạo</span>
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <nav class="mt-2">
+        <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+          <li class="nav-item"><a href="./dashboard.html" class="nav-link"><i class="nav-icon bi bi-speedometer2"></i><p>Dashboard</p></a></li>
+          <li class="nav-item"><a href="./students.html" class="nav-link"><i class="nav-icon bi bi-people-fill"></i><p>Sinh viên</p></a></li>
+          <li class="nav-item"><a href="./users.html" class="nav-link active"><i class="nav-icon bi bi-person-badge"></i><p>Người dùng</p></a></li>
+          <li class="nav-item"><a href="./roles.html" class="nav-link"><i class="nav-icon bi bi-shield-lock"></i><p>Vai trò</p></a></li>
+          <li class="nav-item"><a href="./permissions.html" class="nav-link"><i class="nav-icon bi bi-key"></i><p>Quyền hạn</p></a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="app-main">
+    <div class="app-content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6"><h3 class="mb-0">Người dùng</h3></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+              <li class="breadcrumb-item"><a href="./dashboard.html">Home</a></li>
+              <li class="breadcrumb-item active">Người dùng</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="container-fluid">
+        <div class="card shadow-sm border-0">
+          <div class="card-header d-flex flex-wrap gap-2 align-items-center">
+            <h3 class="card-title mb-0"><i class="bi bi-person-badge me-2 text-success"></i>Danh sách người dùng</h3>
+            <div class="ms-auto d-flex flex-wrap gap-2">
+              <div class="input-group input-group-sm" style="width:240px">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm theo username..." />
+              </div>
+              <button class="btn btn-success btn-sm" id="btnAdd">
+                <i class="bi bi-person-plus me-1"></i>Thêm người dùng
+              </button>
+            </div>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width:35%">Username</th>
+                  <th style="width:20%">Trạng thái</th>
+                  <th style="width:30%">Vai trò</th>
+                  <th style="width:15%" class="text-end">Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr><td colspan="4" class="text-center py-4"><div class="spinner-border spinner-border-sm text-secondary"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="small text-secondary" id="paginationInfo"></div>
+            <nav><ul class="pagination pagination-sm mb-0" id="pagination"></ul></nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="float-end d-none d-sm-inline">QL Đào Tạor</div>
+    <strong>Quản lý trường học | AdminLTE 4</strong>
+  </footer>
+</div>
+
+<!-- User Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalTitle">Thêm người dùng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="userId" />
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+          <input type="text" id="uUsername" class="form-control" placeholder="Nhập username..." />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Mật khẩu <span class="text-danger" id="pwdRequired">*</span></label>
+          <div class="input-group">
+            <input type="password" id="uPassword" class="form-control" placeholder="Nhập mật khẩu..." />
+            <button class="btn btn-outline-secondary" type="button" id="togglePwd">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <div class="form-text" id="pwdHint"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Trạng thái</label>
+          <select id="uStatus" class="form-select">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="INACTIVE">INACTIVE</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Vai trò</label>
+          <div id="rolesCheckboxes" class="border rounded p-2" style="max-height:160px;overflow-y:auto">
+            <div class="text-muted small">Đang tải...</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-success" id="btnSave">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Xác nhận xóa</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">Bạn có chắc chắn muốn xóa người dùng này không?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger btn-sm" id="btnConfirmDelete">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="toast" class="toast align-items-center border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="./adminlte/js/adminlte.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const API = '/api/users';
+  const PAGE_SIZE = 10;
+  let currentPage = 0, totalPages = 0, totalElements = 0;
+  let allRoles = [];
+  let pendingDeleteId = null;
+
+  const tableBody = document.getElementById('tableBody');
+  const pagination = document.getElementById('pagination');
+  const paginationInfo = document.getElementById('paginationInfo');
+  const searchInput = document.getElementById('searchInput');
+  const toastEl = document.getElementById('toast');
+  const toastMsgEl = document.getElementById('toastMsg');
+
+  const userModalEl = document.getElementById('userModal');
+  const confirmModalEl = document.getElementById('confirmModal');
+  const userModal = new bootstrap.Modal(userModalEl);
+  const confirmModal = new bootstrap.Modal(confirmModalEl);
+
+  function showToast(msg, type = 'success') {
+    toastEl.className = `toast align-items-center border-0 text-bg-${type}`;
+    toastMsgEl.textContent = msg;
+    bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 }).show();
+  }
+
+  async function loadRoles() {
+    try {
+      const res = await fetch('/api/roles');
+      allRoles = await res.json();
+    } catch { allRoles = []; }
+  }
+
+  function renderRoleCheckboxes(selectedIds = []) {
+    const container = document.getElementById('rolesCheckboxes');
+    if (!allRoles.length) { container.innerHTML = '<div class="text-muted small">Không có vai trò</div>'; return; }
+    container.innerHTML = allRoles.map(r => `
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="${r.id}" id="role_${r.id}"
+          ${selectedIds.includes(r.id) ? 'checked' : ''}>
+        <label class="form-check-label" for="role_${r.id}">
+          <span class="badge bg-warning-subtle text-warning-emphasis">${r.code}</span> ${r.name || ''}
+        </label>
+      </div>`).join('');
+  }
+
+  function getSelectedRoleIds() {
+    return [...document.querySelectorAll('#rolesCheckboxes input:checked')].map(el => el.value);
+  }
+
+  function highlightText(text, term) {
+    if (!term) return text;
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(escaped, 'ig'), m => `<mark>${m}</mark>`);
+  }
+
+  function renderTable(users) {
+    const term = searchInput.value.trim();
+    if (!users.length) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">Không có dữ liệu</td></tr>';
+    } else {
+      tableBody.innerHTML = users.map(u => {
+        const rolesBadges = (u.roles || []).map(r =>
+          `<span class="badge bg-warning-subtle text-warning-emphasis me-1">${r.code}</span>`
+        ).join('') || '<span class="text-muted small">—</span>';
+        const statusBadge = u.status === 'ACTIVE'
+          ? `<span class="badge bg-success-subtle text-success-emphasis badge-status" data-id="${u.id}" data-action="toggle" title="Click để đổi trạng thái">ACTIVE</span>`
+          : `<span class="badge bg-secondary-subtle text-secondary-emphasis badge-status" data-id="${u.id}" data-action="toggle" title="Click để đổi trạng thái">INACTIVE</span>`;
+        return `<tr>
+          <td><i class="bi bi-person-circle me-2 text-muted"></i>${highlightText(u.username || '', term)}</td>
+          <td>${statusBadge}</td>
+          <td>${rolesBadges}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-secondary me-1" data-id="${u.id}" data-action="edit" title="Sửa"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger" data-id="${u.id}" data-action="delete" title="Xóa"><i class="bi bi-trash"></i></button>
+          </td></tr>`;
+      }).join('');
+    }
+    const from = totalElements === 0 ? 0 : currentPage * PAGE_SIZE + 1;
+    const to = Math.min((currentPage + 1) * PAGE_SIZE, totalElements);
+    paginationInfo.textContent = `Hiển thị ${from}–${to} trên tổng ${totalElements} người dùng`;
+    renderPagination();
+  }
+
+  function renderPagination() {
+    if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+    let html = `<li class="page-item ${currentPage===0?'disabled':''}"><a class="page-link" href="#" data-page="${currentPage-1}">&laquo;</a></li>`;
+    for (let i = 0; i < totalPages; i++) {
+      html += `<li class="page-item ${i===currentPage?'active':''}"><a class="page-link" href="#" data-page="${i}">${i+1}</a></li>`;
+    }
+    html += `<li class="page-item ${currentPage===totalPages-1?'disabled':''}"><a class="page-link" href="#" data-page="${currentPage+1}">&raquo;</a></li>`;
+    pagination.innerHTML = html;
+  }
+
+  pagination.addEventListener('click', function(e) {
+    if (e.target.tagName !== 'A') return;
+    e.preventDefault();
+    const page = Number(e.target.getAttribute('data-page'));
+    if (isNaN(page) || page === currentPage || page < 0 || page >= totalPages) return;
+    currentPage = page;
+    loadUsers();
+  });
+
+  searchInput.addEventListener('input', function() { currentPage = 0; loadUsers(); });
+
+  async function loadUsers() {
+    tableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border spinner-border-sm text-secondary"></div></td></tr>';
+    try {
+      const res = await fetch(`${API}/search?keyword=${encodeURIComponent(searchInput.value||'')}&page=${currentPage}&size=${PAGE_SIZE}`);
+      const data = await res.json();
+      const users = Array.isArray(data.content) ? data.content : [];
+      totalPages = data.totalPages || 0;
+      totalElements = data.totalElements || 0;
+      renderTable(users);
+    } catch { tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Lỗi tải dữ liệu</td></tr>'; }
+  }
+
+  // Open add modal
+  document.getElementById('btnAdd').addEventListener('click', async function() {
+    await loadRoles();
+    document.getElementById('userId').value = '';
+    document.getElementById('uUsername').value = '';
+    document.getElementById('uPassword').value = '';
+    document.getElementById('uStatus').value = 'ACTIVE';
+    document.getElementById('userModalTitle').textContent = 'Thêm người dùng';
+    document.getElementById('pwdRequired').style.display = '';
+    document.getElementById('pwdHint').textContent = '';
+    document.getElementById('btnSave').dataset.mode = 'create';
+    renderRoleCheckboxes([]);
+    userModal.show();
+  });
+
+  // Toggle password visibility
+  document.getElementById('togglePwd').addEventListener('click', function() {
+    const pwdInput = document.getElementById('uPassword');
+    const isText = pwdInput.type === 'text';
+    pwdInput.type = isText ? 'password' : 'text';
+    this.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+  });
+
+  // Table actions
+  tableBody.addEventListener('click', async function(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const id = btn.getAttribute('data-id');
+    const action = btn.getAttribute('data-action');
+
+    if (action === 'toggle') {
+      try {
+        await fetch(`${API}/${id}/status`, { method: 'PUT' });
+        showToast('Đã cập nhật trạng thái');
+        loadUsers();
+      } catch { showToast('Lỗi cập nhật trạng thái', 'danger'); }
+    } else if (action === 'edit') {
+      await loadRoles();
+      try {
+        const res = await fetch(`${API}/${id}`);
+        const u = await res.json();
+        document.getElementById('userId').value = u.id;
+        document.getElementById('uUsername').value = u.username || '';
+        document.getElementById('uPassword').value = '';
+        document.getElementById('uStatus').value = u.status || 'ACTIVE';
+        document.getElementById('userModalTitle').textContent = 'Cập nhật người dùng';
+        document.getElementById('pwdRequired').style.display = 'none';
+        document.getElementById('pwdHint').textContent = 'Để trống nếu không đổi mật khẩu';
+        document.getElementById('btnSave').dataset.mode = 'update';
+        const selectedIds = (u.roles || []).map(r => r.id);
+        renderRoleCheckboxes(selectedIds);
+        userModal.show();
+      } catch { showToast('Không tải được thông tin người dùng', 'danger'); }
+    } else if (action === 'delete') {
+      pendingDeleteId = id;
+      confirmModal.show();
+    }
+  });
+
+  document.getElementById('btnConfirmDelete').addEventListener('click', async function() {
+    if (!pendingDeleteId) return;
+    try {
+      await fetch(`${API}/${pendingDeleteId}`, { method: 'DELETE' });
+      confirmModal.hide();
+      showToast('Đã xóa người dùng');
+      loadUsers();
+    } catch { showToast('Lỗi xóa người dùng', 'danger'); }
+    pendingDeleteId = null;
+  });
+
+  document.getElementById('btnSave').addEventListener('click', async function() {
+    const mode = this.dataset.mode;
+    const id = document.getElementById('userId').value;
+    const username = document.getElementById('uUsername').value.trim();
+    const password = document.getElementById('uPassword').value.trim();
+    const status = document.getElementById('uStatus').value;
+    const roleIds = getSelectedRoleIds();
+
+    if (!username) { showToast('Vui lòng nhập username', 'warning'); return; }
+    if (mode === 'create' && !password) { showToast('Vui lòng nhập mật khẩu', 'warning'); return; }
+
+    const payload = { username, status };
+    if (password) payload.password = password;
+
+    try {
+      const url = mode === 'update' ? `${API}/${id}` : API;
+      const method = mode === 'update' ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const saved = await res.json();
+
+      // Assign roles
+      await fetch(`${API}/${saved.id}/roles`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(roleIds)
+      });
+      userModal.hide();
+      showToast(mode === 'create' ? 'Thêm người dùng thành công' : 'Cập nhật thành công');
+      loadUsers();
+    } catch { showToast('Có lỗi xảy ra khi lưu', 'danger'); }
+  });
+
+  const sw = document.querySelector('.sidebar-wrapper');
+  if (sw && window.OverlayScrollbarsGlobal?.OverlayScrollbars)
+    window.OverlayScrollbarsGlobal.OverlayScrollbars(sw, { scrollbars: { theme:'os-theme-light', autoHide:'leave', clickScroll:true }});
+
+  loadUsers();
+});
+</script>
+</body>
+</html>
