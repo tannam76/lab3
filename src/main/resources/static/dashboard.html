@@ -210,7 +210,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   async function loadStats() {
     try {
-      const res = await fetch('/api/dashboard/stats');
+      const res = await fetch('https://lab3-pi5q.onrender.com/api/dashboard/stats');
       const data = await res.json();
       document.getElementById('countStudents').textContent = data.students ?? '?';
       document.getElementById('countUsers').textContent = data.users ?? '?';
