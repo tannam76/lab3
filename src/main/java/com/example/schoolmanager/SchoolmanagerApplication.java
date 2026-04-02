@@ -1,11 +1,11 @@
-server.port=${PORT:8080}
+package com.example.studentmanager;
 
-spring.datasource.url=jdbc:postgresql://dpg-d6mokcftskes73e1pd90-a:5432/school_kbjz
-spring.datasource.username=school_kbjz_user
-spring.datasource.password=jdhjIHKVisnAteB9Etfc5f32LgGNr2Ln
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-spring.datasource.driver-class-name=org.postgresql.Driver
-
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+@SpringBootApplication
+public class StudentmanagerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(StudentmanagerApplication.class, args);
+    }
+}
