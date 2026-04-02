@@ -1,13 +1,13 @@
-package com.example.schoolmanager;
+# Use Render (or any cloud) provided environment variables when available.
+# Local defaults are kept for local development.
+server.port=${PORT:8080}
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+# Default local Postgres settings (for dev). Override with env vars in Render/Prod.
+# Example: postgresql://user:pass@host:5432/dbname
+spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/school}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME:postgres}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:postgres}
 
-@SpringBootApplication
-public class SchoolmanagerApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SchoolmanagerApplication.class, args);
-	}
-
-}
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
