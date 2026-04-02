@@ -1,30 +1,27 @@
 package com.example.schoolmanager.model;
 
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "students")
 public class Student {
+
     @Id
     @GeneratedValue
-    @UuidGenerator   // Hibernate 6+
-    @Column(columnDefinition = "UNIQUEIDENTIFIER",
-            updatable = false,
-            nullable = false)
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    //  NVARCHAR trên SQL Server
-    @Column(columnDefinition = "NVARCHAR(100)")
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column(columnDefinition = "NVARCHAR(100)")
+    @Column(name = "email", length = 100, unique = true)
     private String email;
-        // ===== Constructor =====
+
+    // ===== Constructor =====
     public Student() {}
 
     public Student(String name, String email) {
