@@ -12,13 +12,13 @@ public class Permission {
     @Id
     @GeneratedValue
     @UuidGenerator
-    @Column(columnDefinition = "UNIQUEIDENTIFIER", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private UUID id;
 
     @Column(length = 50, nullable = false, unique = true)
     private String code;
 
-    @Column(columnDefinition = "NVARCHAR(255)")
+    @Column(length = 255)
     private String description;
 
     public Permission() {}
