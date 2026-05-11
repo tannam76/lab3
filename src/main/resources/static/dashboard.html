@@ -185,7 +185,7 @@
                 <ul class="list-unstyled mb-0">
                   <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Ứng dụng</span><span class="fw-semibold">QL Đào Tạo</span></li>
                   <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Framework</span><span class="fw-semibold">Spring Boot + AdminLTE 4</span></li>
-                  <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Database</span><span class="fw-semibold">SQL Server</span></li>
+                  <li class="py-1 border-bottom d-flex justify-content-between"><span class="text-muted">Database</span><span class="fw-semibold">PostgreSQL</span></li>
                   <li class="py-1 d-flex justify-content-between"><span class="text-muted">Phiên bản</span><span class="fw-semibold">1.0.0</span></li>
                 </ul>
               </div>
@@ -210,7 +210,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   async function loadStats() {
     try {
-      const res = await fetch('https://lab3-pi5q.onrender.com/api/dashboard/stats');
+      const res = await fetch('/api/dashboard/stats');
       const data = await res.json();
       document.getElementById('countStudents').textContent = data.students ?? '?';
       document.getElementById('countUsers').textContent = data.users ?? '?';
